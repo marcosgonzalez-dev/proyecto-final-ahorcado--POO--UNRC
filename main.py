@@ -16,11 +16,11 @@ class MotorJuego:
     def preparar_partida(self):
         self.interfaz.mostrar_bienvenida()
 
-        # 1. Registro de jugador
+        # se registra el nombre del jugador
         nombre = self.interfaz.pedir_nombre()
         self.jugador = Jugador(nombre)
 
-        # 2. Selección de categoría y carga de datos
+        # se selecciona la categoria y se cargan las palabras
         categoria_id = self.interfaz.seleccionar_categoria()
         lista_palabras = self.gestor.cargar_palabras(categoria_id)
 
@@ -28,33 +28,30 @@ class MotorJuego:
             print("❌ Error fatal: No hay palabras disponibles para jugar.")
             sys.exit()
 
-        # 3. Elegir palabra al azar e instanciar lógica de Palabra
+        # se elige una palabra al azar y se inicia la logica del juego
         seleccion = random.choice(lista_palabras)
         self.palabra_obj = Palabra(seleccion)
 
     def jugar(self):
         self.preparar_partida()
 
-        # Bucle principal de la partida
+        # bucle principal de la partida
         while self.jugador.tiene_vidas() and not self.palabra_obj.es_palabra_completa():
-            # Actualizar visuales
             self.interfaz.mostrar_escenario(
                 progreso=self.palabra_obj.obtener_progreso(),
                 intentos=self.jugador.intentos_restantes,
                 usadas=self.jugador.letras_usadas,
             )
-
-            # Entrada del usuario
+            # se pide una letra al jugador
             letra = self.interfaz.pedir_letra()
 
-            # Lógica de validación
+            # se verifica si la letra es correcta
             if not self.palabra_obj.verificar_letra(letra):
                 if letra not in self.jugador.letras_usadas:
                     self.jugador.descontar_vida()
-
             self.jugador.registrar_intento(letra)
 
-        # Fin del juego
+        # fin del juego
         self.interfaz.limpiar_pantalla()
         self.interfaz.mostrar_resultado(
             gano=self.palabra_obj.es_palabra_completa(),
@@ -65,6 +62,10 @@ class MotorJuego:
 if __name__ == "__main__":
     app = MotorJuego()
     try:
-        app.jugar()
+        while True:
+            app.jugar()
+            if not app.interfaz.pedir_reintentar():
+                app.interfaz.mostrar_despedida()
+                break
     except KeyboardInterrupt:
         print("\n\n👋 Partida finalizada por el usuario. ¡Hasta pronto!")

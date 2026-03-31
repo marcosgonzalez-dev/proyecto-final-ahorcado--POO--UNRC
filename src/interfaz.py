@@ -3,7 +3,8 @@ from art import tprint
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-from rich.prompt import Prompt, IntPrompt
+from rich.prompt import Prompt, IntPrompt, Confirm
+
 
 console = Console()
 
@@ -13,7 +14,7 @@ class Interfaz:
         self.console = console
 
     def limpiar_pantalla(self):
-        # Comando para Windows (cls) o Linux/Mac (clear)
+        # comando para Windows (cls) o Linux/Mac (clear)
         os.system("cls" if os.name == "nt" else "clear")
 
     def mostrar_bienvenida(self):
@@ -40,13 +41,12 @@ class Interfaz:
         return categorias[opcion]
 
     def mostrar_escenario(self, progreso, intentos, usadas):
-        """
-        Dibuja la tabla de estado y la palabra oculta.
-        """
+
+        # tabla de estado y la palabra oculta
         self.limpiar_pantalla()
         tprint("JUGANDO", font="minis")
 
-        # Tabla de información
+        # tabla de información
         tabla = Table(show_header=True, header_style="bold magenta")
         tabla.add_column("Intentos Restantes", justify="center")
         tabla.add_column("Letras Probadas", justify="center")
@@ -58,7 +58,7 @@ class Interfaz:
 
         self.console.print(tabla)
 
-        # Mostrar el progreso de la palabra (ej: A _ _ O)
+        # mostrar el progreso de la palabra (ej: A _ _ O)
         self.console.print(
             f"\n[bold cyan]PALABRA:[/bold cyan] [white]{progreso}[/white]\n"
         )
@@ -79,3 +79,12 @@ class Interfaz:
                     f"[bold red]GAME OVER. La palabra era: {palabra_secreta}[/bold red]"
                 )
             )
+
+    def pedir_reintentar(self):
+        return Confirm.ask(
+            "[bold green]¿Quieres jugar de nuevo? [/bold green]",
+            default=True,
+        )
+
+    def mostrar_despedida(self):
+        self.console.print("[bold green]¡Hasta luego! [/bold green]")

@@ -15,7 +15,7 @@ class Palabra:
         return False
 
     def obtener_progreso(self):
-        # Devuelve algo como "A _ _ O _"
+        # devuelve algo como "A _ _ O _"
         return " ".join(
             [l if l in self.letras_adivinadas else "_" for l in self.secreta]
         )

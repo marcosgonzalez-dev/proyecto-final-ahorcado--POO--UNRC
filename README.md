@@ -51,7 +51,7 @@ _Seguiremos el flujo de **Fork & Pull Request** para proteger la rama `main`:_
 4. Instalar dependencias: `pip install -r requirements.txt` (Instala la librería **Rich**)
 5. **Ejecutar:** py main.py o python main.py
 
-## 🖥️ Instalación via script (Opcion recomendada para windows)
+## 🖥️ Instalación via script (opcion recomendada para windows)
 
 1. Ejecutar con doble click el archivo `setup.bat`
 2. **Ejecutar:** `py main.py` o `python main.py`
