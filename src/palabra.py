@@ -17,9 +17,12 @@ class Palabra:
     # devuelve algo como "A _ _ O _"
     def obtener_progreso(self):
         return " ".join(
-            [l if l in self.letras_adivinadas else "_" for l in self.secreta]
+            [
+                l if l in self.letras_adivinadas else (" " if l == " " else "_")
+                for l in self.secreta
+            ]
         )
 
     # verifica si la palabra esta completa
     def es_palabra_completa(self):
-        return all(l in self.letras_adivinadas for l in self.secreta)
+        return all(l in self.letras_adivinadas or l == " " for l in self.secreta)

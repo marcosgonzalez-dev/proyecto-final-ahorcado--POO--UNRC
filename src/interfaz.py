@@ -121,8 +121,20 @@ class Interfaz(ctk.CTk):
         main_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
         # seccion de palabra (usamos la constante de fuente monoespaciada)
+        if isinstance(progreso, list):
+            texto_progreso = " ".join(progreso)
+        else:
+            texto_progreso = progreso
+        # ajusta el tamaño de la fuente segun la longitud de la palabra
+        tamanio_fuente = 45 if len(texto_progreso) < 20 else 28
+
+        # palabra se ajusta al tamaño de la pantalla
         self.lbl_palabra = ctk.CTkLabel(
-            main_frame, text=progreso, font=(FUENTE_MONO, 45, "bold")
+            main_frame,
+            text=texto_progreso,
+            font=(FUENTE_MONO, tamanio_fuente, "bold"),
+            wraplength=700,
+            justify="center",
         )
         self.lbl_palabra.pack(pady=40)
 
