@@ -1,9 +1,21 @@
 import sys
+import os
 import random
 from src.interfaz import Interfaz
 from src.gestor_datos import GestorDatos
 from src.palabra import Palabra
 from src.jugador import Jugador
+
+
+# funcion que permite encontrar los recursos del juego
+def resource_path(relative_path):
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class MotorJuego:
@@ -14,6 +26,7 @@ class MotorJuego:
             callback_inicio=self.iniciar_partida,
             callback_pista=self.entregar_pista,
         )
+        # llama a la funcion que permite encontrar los recursos del juego
         self.gestor = GestorDatos()
         self.jugador = None
         self.palabra_obj = None
